@@ -41,7 +41,13 @@ public class StundenplanService {
     @Path("/login")
     @Produces({ MediaType.TEXT_PLAIN })
     public String authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
-        return JWT.createJWT("tt", username, password, 30_000L);
+        if (authenticate(username, password))
+            return JWT.createJWT("tt", "stundenplan", username, 300_000L);
+        return "";
+    }
+
+    private boolean authenticate(String username, String password) {
+        return true;
     }
 
 /*

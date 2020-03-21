@@ -2,6 +2,9 @@ package org.jgrosshardt.rest.server;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import org.jgrosshardt.rest.JWTFilter.JWTTokenNeededFilter;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +16,7 @@ public class RestEasyServices extends Application {
 
     public RestEasyServices() {
         singletons.add(new StundenplanService());
+        singletons.add(new JWTTokenNeededFilter());
     }
 
     @Override
