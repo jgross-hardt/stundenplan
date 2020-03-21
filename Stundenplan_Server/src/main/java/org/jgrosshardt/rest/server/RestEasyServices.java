@@ -12,8 +12,7 @@ public class RestEasyServices extends Application {
     private Set<Object> singletons = new HashSet<Object>();
 
     public RestEasyServices() {
-        singletons.add(new StundenplanCrudService());
-        singletons.add(new StundenplanAuthService());
+        singletons.add(new StundenplanService());
     }
 
     @Override

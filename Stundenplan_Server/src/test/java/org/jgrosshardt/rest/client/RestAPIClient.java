@@ -25,7 +25,6 @@ public class RestAPIClient {
 
     public void getRequest(String path) {
         response = client.target(URL + path).request().get();
-
     }
 /*
     public void testArtistDeserialization() {

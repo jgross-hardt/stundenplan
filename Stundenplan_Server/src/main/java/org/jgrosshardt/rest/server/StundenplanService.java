@@ -3,14 +3,9 @@ package org.jgrosshardt.rest.server;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-@Path("/")
-public class StundenplanCrudService {
+@Path("")
+public class StundenplanService {
 
     @GET
     @Path("/")
@@ -23,6 +18,28 @@ public class StundenplanCrudService {
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .entity("").build();
     }
+
+    @GET
+    @Path("/echo")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String echo(@HeaderParam("message") String message) {
+        return (message != null ? message : "No message!");
+    }
+
+    @GET
+    @Path("/echo_auth")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String echoAuth(@HeaderParam("message") String message) {
+        return (message != null ? message : "No message!");
+    }
+
+    @GET
+    @Path("/login")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
+        return null;
+    }
+
 /*
     @GET
     @Path("/getinfo")

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Stundenplan_Server" target="1.8" />
+      <module name="Stundenplan_Server" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
