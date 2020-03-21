@@ -77,4 +77,30 @@ public class Stunde {
     public int hashCode() {
         return Objects.hash(id, tag, stunde, kurse);
     }
+
+    @Override
+    public String toString() {
+        return "" + tagFromInt(tag) + ", " + stunde + ". Stunde";
+    }
+
+    private static String tagFromInt(short tag) {
+        switch (tag) {
+        case 0:
+            return "MO";
+        case 1:
+            return "DI";
+        case 2:
+            return "MI";
+        case 3:
+            return "DO";
+        case 4:
+            return "FR";
+        case 5:
+            return "SA";
+        case 6:
+            return "SO";
+        default:
+            return "##";
+        }
+    }
 }

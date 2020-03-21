@@ -16,7 +16,7 @@ public class Stufe {
     @Column(name = "Stufe", length = 255)
     private String stufe;
 
-    @OneToMany(mappedBy = "stufe")
+    @OneToMany(mappedBy = "stufe", fetch = FetchType.LAZY)
     private Set<Schueler> schueler;
 
     public Stufe() {
@@ -54,5 +54,10 @@ public class Stufe {
     @Override
     public int hashCode() {
         return Objects.hash(id, stufe);
+    }
+
+    @Override
+    public String toString() {
+        return "Stufe " + stufe;
     }
 }

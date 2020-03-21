@@ -1,6 +1,9 @@
 package org.jgrosshardt.jpa.database;
 
 import javax.persistence.*;
+
+import org.jgrosshardt.jpa.database.util.Strings;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,22 +19,22 @@ public class Kurs {
     @Column(name = "Kursbezeichnung")
     private String kursbezeichnung;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`Fach-ID`")
     private Fach fach;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`Stufen-ID`")
     private Stufe stufe;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`Lehrer-ID`")
     private Lehrer lehrer;
 
-    @ManyToMany(mappedBy = "kurse")
+    @ManyToMany(mappedBy = "kurse", fetch = FetchType.LAZY)
     private Set<Schueler> schueler;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "`kurs-stunde`",
             joinColumns = @JoinColumn(name = "`Kurs-ID`"),
@@ -110,12 +113,21 @@ public class Kurs {
                 stufe.equals(stufe) &&
                 lehrer.equals(lehrer) &&
                 Objects.equals(id, kurs.id) &&
-                Objects.equals(kursbezeichnung, kurs.kursbezeichnung) &&
-                Objects.equals(schueler, kurs.schueler);
+                Objects.equals(kursbezeichnung, kurs.kursbezeichnung);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, kursbezeichnung, fach, stufe, lehrer, schueler);
+        return Objects.hash(id, kursbezeichnung, fach, stufe, lehrer);
+    }
+
+    @Override
+    public String toString() {
+        return "Kurs [" + id + ":" + kursbezeichnung + "]\n" + //
+                " Fach    : " + fach.getShorthand() + " (" + fach.getFach() + ")\n" + //
+                " Stufe   : " + stufe.getStufe() + "\n" + //
+                " Lehrer  : " + lehrer + "\n" + //
+                " Schüler : \n   - " + Strings.join(schueler, "\n   - ") + "\n" + //
+                " Stunden : \n   - " + Strings.join(stunden, "\n   - ");
     }
 }

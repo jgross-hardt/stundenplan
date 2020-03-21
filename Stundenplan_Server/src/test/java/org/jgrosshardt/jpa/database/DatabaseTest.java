@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,12 +28,77 @@ public class DatabaseTest {
         // entityManager.getTransaction().commit();
     }
 
+    @AfterClass
+    public static void shutdown() {
+        entityManager.close();
+    }
+
     @Test
     public void testStufen() {
         TypedQuery<Stufe> stufen = entityManager.createQuery("select s From Stufe s", Stufe.class);
         List<Stufe> results = stufen.getResultList();
         for (Stufe stufe : results) {
             System.err.println(stufe);
+        }
+    }
+
+    @Test
+    public void testLehrer() {
+        TypedQuery<Lehrer> lehrer = entityManager.createQuery("select l From Lehrer l", Lehrer.class);
+        List<Lehrer> results = lehrer.getResultList();
+        for (Lehrer l : results) {
+            System.err.println(l);
+        }
+    }
+
+    @Test
+    public void testSchueler() {
+        TypedQuery<Schueler> schueler = entityManager.createQuery("select s From Schueler s", Schueler.class);
+        List<Schueler> results = schueler.getResultList();
+        for (Schueler s : results) {
+            System.err.println(s);
+            if (s.getId() == 100) {
+                entityManager.getTransaction().begin();
+                entityManager.remove(s);
+                entityManager.getTransaction().commit();
+            }
+        }
+
+        TypedQuery<Stufe> stufen = entityManager.createQuery("select s From Stufe s Where s.stufe = 'EF'", Stufe.class);
+
+        Schueler s = new Schueler();
+        s.setFirstname("Justus");
+        s.setLastname("Groß-Hardt");
+        s.setUsername("jgrosshardt");
+        s.setPassword("12345");
+        s.setStufe(stufen.getSingleResult());
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(s);
+        entityManager.getTransaction().commit();
+
+        System.err.println(s);
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(s);
+        entityManager.getTransaction().commit();
+    }
+
+    @Test
+    public void testKurse() {
+        TypedQuery<Kurs> schueler = entityManager.createQuery("select k From Kurs k", Kurs.class);
+        List<Kurs> results = schueler.getResultList();
+        for (Kurs k : results) {
+            System.err.println(k);
+        }
+    }
+
+    @Test
+    public void testStunden() {
+        TypedQuery<Stunde> schueler = entityManager.createQuery("select s From Stunde s", Stunde.class);
+        List<Stunde> results = schueler.getResultList();
+        for (Stunde s : results) {
+            System.err.println(s);
         }
     }
 }

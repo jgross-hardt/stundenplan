@@ -13,7 +13,7 @@ public class Schueler {
     @Column(name = "`Schueler-ID`")
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "`Stufen-ID`")
     private Stufe stufe;
 
@@ -29,7 +29,7 @@ public class Schueler {
     @Column(name = "Nachname")
     private String lastname;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "`schueler-kurs`",
             joinColumns = @JoinColumn(name = "`Schueler-ID`"),
@@ -114,12 +114,24 @@ public class Schueler {
                 Objects.equals(username, schueler.username) &&
                 Objects.equals(password, schueler.password) &&
                 Objects.equals(firstname, schueler.firstname) &&
-                Objects.equals(lastname, schueler.lastname) &&
-                Objects.equals(kurse, schueler.kurse);
+                Objects.equals(lastname, schueler.lastname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stufe, username, password, firstname, lastname, kurse);
+        return Objects.hash(id, stufe, username, password, firstname, lastname);
+    }
+
+    public String toFullString() {
+        String header = firstname + " " + lastname + ", " + stufe.getStufe() + " (" + username + "," + password + ")";
+        for (Kurs kurs : kurse) {
+            header += kurs.getKursbezeichnung() + "\n";
+        }
+        return header;
+    }
+
+    @Override
+    public String toString() {
+        return firstname + " " + lastname + ", " + stufe.getStufe();
     }
 }

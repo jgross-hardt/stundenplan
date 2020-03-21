@@ -22,10 +22,10 @@ public class Lehrer {
     @Column(name = "Kuerzel")
     private String shorthand;
 
-    @ManyToMany(mappedBy = "lehrer")
+    @ManyToMany(mappedBy = "lehrer", fetch = FetchType.LAZY)
     private Set<Fach> faecher;
 
-    @OneToMany(mappedBy = "lehrer")
+    @OneToMany(mappedBy = "lehrer", fetch = FetchType.LAZY)
     private Set<Kurs> kurse;
 
     public Lehrer() {

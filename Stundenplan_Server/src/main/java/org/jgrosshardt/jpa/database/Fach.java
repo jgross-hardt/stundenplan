@@ -19,7 +19,7 @@ public class Fach {
     @Column(name = "Kuerzel")
     private String shorthand;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "`fach-lehrer`",
             joinColumns = @JoinColumn(name = "`Lehrer-ID`"),
