@@ -11,7 +11,7 @@ public class Stufe {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "`Stufen-ID`")
-    private Long id;
+    private Integer id;
 
     @Column(name = "Stufe", length = 255)
     private String stufe;
@@ -22,16 +22,15 @@ public class Stufe {
     public Stufe() {
     }
 
-    public Stufe(Long id, String stufe) {
-        this.id = id;
+    public Stufe(String stufe) {
         this.stufe = stufe;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

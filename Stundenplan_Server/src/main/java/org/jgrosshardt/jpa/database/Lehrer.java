@@ -11,7 +11,7 @@ public class Lehrer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "`Lehrer-ID`")
-    private Long id;
+    private Integer id;
 
     @Column(name = "Nachname")
     private String lastname;
@@ -38,11 +38,11 @@ public class Lehrer {
         this.shorthand = shorthand;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@ public class Schueler {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "`Schueler-ID`")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "`Stufen-ID`")
@@ -40,8 +40,7 @@ public class Schueler {
     public Schueler() {
     }
 
-    public Schueler(Long id, Stufe stufe, String username, String password, String firstname, String lastname) {
-        this.id = id;
+    public Schueler(Stufe stufe, String username, String password, String firstname, String lastname) {
         this.stufe = stufe;
         this.username = username;
         this.password = password;
@@ -49,11 +48,11 @@ public class Schueler {
         this.lastname = lastname;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -111,7 +110,7 @@ public class Schueler {
         if (o == null || getClass() != o.getClass()) return false;
         Schueler schueler = (Schueler) o;
         return Objects.equals(id, schueler.id) &&
-                stufe.equals(schueler.stufe) &&
+                Objects.equals(stufe, schueler.stufe) &&
                 Objects.equals(username, schueler.username) &&
                 Objects.equals(password, schueler.password) &&
                 Objects.equals(firstname, schueler.firstname) &&

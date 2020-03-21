@@ -11,7 +11,7 @@ public class Kurs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "`Kurs-ID`")
-    private Long id;
+    private Integer id;
 
     @Column(name = "Kursbezeichnung")
     private String kursbezeichnung;
@@ -49,11 +49,11 @@ public class Kurs {
         this.lehrer = lehrer;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

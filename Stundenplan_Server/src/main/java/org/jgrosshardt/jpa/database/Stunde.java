@@ -11,13 +11,13 @@ public class Stunde {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "`Stunden-ID`")
-    private Long id;
+    private Integer id;
 
     @Column(name = "Tag", length = 3)
-    private int tag;
+    private short tag;
 
     @Column(name = "Stunde", length = 3)
-    private int stunde;
+    private short stunde;
 
     @ManyToMany(mappedBy = "stunden")
     private Set<Kurs> kurse;
@@ -25,25 +25,24 @@ public class Stunde {
     public Stunde() {
     }
 
-    public Stunde(Long id, int tag, int stunde) {
-        this.id = id;
+    public Stunde(short tag, short stunde) {
         this.tag = tag;
         this.stunde = stunde;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getTag() {
+    public short getTag() {
         return tag;
     }
 
-    public void setTag(int tag) {
+    public void setTag(short tag) {
         this.tag = tag;
     }
 
@@ -51,7 +50,7 @@ public class Stunde {
         return stunde;
     }
 
-    public void setStunde(int stunde) {
+    public void setStunde(short stunde) {
         this.stunde = stunde;
     }
 
