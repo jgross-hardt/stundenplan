@@ -22,6 +22,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
         // Get the HTTP Authorization header from the request
         String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        // "X-Auth-Token"
 
         // Extract the token from the HTTP Authorization header
         String token = authorizationHeader.substring("Bearer".length()).trim();

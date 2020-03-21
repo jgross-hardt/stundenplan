@@ -4,6 +4,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
+import org.jgrosshardt.rest.JWTFilter.JWT;
+import org.junit.Test;
+
+import io.jsonwebtoken.Claims;
+
 public class RestAPIClient {
     private static final String ServerURL = "https://localhost";
     private static final int port = 8080;
@@ -26,6 +31,16 @@ public class RestAPIClient {
     public void getRequest(String path) {
         response = client.target(URL + path).request().get();
     }
+
+    @Test
+    public void testJWT() {
+        String token = JWT.createJWT("test", "hjklhjhkj", "kuiopoiop", 30_000L);
+        Claims claims = JWT.decodeJWT(token);
+        claims.forEach((k, v) -> {
+            System.err.println(k + "=>" + v);
+        });
+    }
+
 /*
     public void testArtistDeserialization() {
         response = client.target(baseUrl + "jsonString").request().get();

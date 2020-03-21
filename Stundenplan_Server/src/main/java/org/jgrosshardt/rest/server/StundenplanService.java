@@ -4,7 +4,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("")
+import org.jgrosshardt.rest.JWTFilter.JWT;
+import org.jgrosshardt.rest.JWTFilter.JWTTokenNeeded;
+
+@Path("/auth")
 public class StundenplanService {
 
     @GET
@@ -21,23 +24,24 @@ public class StundenplanService {
 
     @GET
     @Path("/echo")
-    @Produces({MediaType.TEXT_PLAIN})
-    public String echo(@HeaderParam("message") String message) {
+    @Produces({ MediaType.TEXT_PLAIN })
+    public String echo(@QueryParam("message") String message) {
         return (message != null ? message : "No message!");
     }
 
     @GET
     @Path("/echo_auth")
-    @Produces({MediaType.TEXT_PLAIN})
-    public String echoAuth(@HeaderParam("message") String message) {
+    @Produces({ MediaType.TEXT_PLAIN })
+    @JWTTokenNeeded
+    public String echoAuth(@QueryParam("message") String message) {
         return (message != null ? message : "No message!");
     }
 
     @GET
     @Path("/login")
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
-        return null;
+    @Produces({ MediaType.TEXT_PLAIN })
+    public String authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
+        return JWT.createJWT("tt", username, password, 30_000L);
     }
 
 /*

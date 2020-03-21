@@ -16,7 +16,7 @@ public class JWT {
     private static final String SECRET_KEY;
     static {
         try {
-            SECRET_KEY = new String(JWT.class.getResourceAsStream("private.key").readAllBytes());
+            SECRET_KEY = new String(JWT.class.getResourceAsStream("/private.key").readAllBytes());
         } catch (IOException e) {
             throw new RuntimeException("Unable to retrieve private key", e);
         }

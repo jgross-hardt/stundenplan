@@ -1,2 +1,3 @@
 /Stundenplan_Server/target/*
 /Stundenplan_Server/src/main/resources/secret.key
+/Stundenplan_Server/src/main/resources/private.key
