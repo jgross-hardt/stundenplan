@@ -10,22 +10,22 @@ public class Kurs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Kurs-ID")
+    @Column(name = "`Kurs-ID`")
     private Long id;
 
     @Column(name = "Kursbezeichnung")
     private String kursbezeichnung;
 
     @ManyToOne
-    @JoinColumn(name = "Fach-ID")
+    @JoinColumn(name = "`Fach-ID`")
     private Fach fach;
 
     @ManyToOne
-    @JoinColumn(name = "Stufen-ID")
+    @JoinColumn(name = "`Stufen-ID`")
     private Stufe stufe;
 
     @ManyToOne
-    @JoinColumn(name = "Lehrer-ID")
+    @JoinColumn(name = "`Lehrer-ID`")
     private Lehrer lehrer;
 
     @ManyToMany(mappedBy = "kurse")
@@ -33,17 +33,16 @@ public class Kurs {
 
     @ManyToMany
     @JoinTable(
-            name = "kurse-stunde",
-            joinColumns = @JoinColumn(name = "Kurs-ID"),
-            inverseJoinColumns = @JoinColumn(name = "Stunden-ID")
+            name = "`kurs-stunde`",
+            joinColumns = @JoinColumn(name = "`Kurs-ID`"),
+            inverseJoinColumns = @JoinColumn(name = "`Stunden-ID`")
     )
     private Set<Stunde> stunden;
 
     public Kurs() {
     }
 
-    public Kurs(Long id, String kursbezeichnung, Fach fach, Stufe stufe, Lehrer lehrer) {
-        this.id = id;
+    public Kurs(String kursbezeichnung, Fach fach, Stufe stufe, Lehrer lehrer) {
         this.kursbezeichnung = kursbezeichnung;
         this.fach = fach;
         this.stufe = stufe;

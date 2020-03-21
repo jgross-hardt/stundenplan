@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="stundenplandb@pippin2" uuid="d46cb7bb-ef72-4652-aa8d-a267d5fb94da">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://pippin2:3316/stundenplandb</jdbc-url>
+    </data-source>
+  </component>
+</project>

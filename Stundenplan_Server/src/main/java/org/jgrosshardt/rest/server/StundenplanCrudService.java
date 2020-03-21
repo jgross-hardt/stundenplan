@@ -23,7 +23,7 @@ public class StundenplanCrudService {
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .entity("").build();
     }
-
+/*
     @GET
     @Path("/getinfo")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -91,4 +91,6 @@ public class StundenplanCrudService {
     public List<Movie> listMovies() {
         return inventory.values().stream().collect(Collectors.toCollection(ArrayList::new));
     }
+
+ */
 }

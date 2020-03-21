@@ -1,7 +1,5 @@
 package org.jgrosshardt.jpa.database;
 
-import sun.util.resources.cldr.ext.LocaleNames_es_GT;
-
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -12,12 +10,12 @@ public class Schueler {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Schueler-ID")
+    @Column(name = "`Schueler-ID`")
     private Long id;
 
     @ManyToOne
-    @Column(name = "Stufen-ID")
-    private Long stufenId;
+    @JoinColumn(name = "`Stufen-ID`")
+    private Stufe stufe;
 
     @Column(name = "Benutzername")
     private String username;
@@ -33,18 +31,18 @@ public class Schueler {
 
     @ManyToMany
     @JoinTable(
-            name = "schueler-kurse",
-            joinColumns = @JoinColumn(name = "Schueler-ID"),
-            inverseJoinColumns = @JoinColumn(name = "Kurs-ID")
+            name = "`schueler-kurs`",
+            joinColumns = @JoinColumn(name = "`Schueler-ID`"),
+            inverseJoinColumns = @JoinColumn(name = "`Kurs-ID`")
     )
     private Set<Kurs> kurse;
 
     public Schueler() {
     }
 
-    public Schueler(Long id, Long stufenId, String username, String password, String firstname, String lastname) {
+    public Schueler(Long id, Stufe stufe, String username, String password, String firstname, String lastname) {
         this.id = id;
-        this.stufenId = stufenId;
+        this.stufe = stufe;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -59,12 +57,12 @@ public class Schueler {
         this.id = id;
     }
 
-    public Long getStufenId() {
-        return stufenId;
+    public Stufe getStufe() {
+        return stufe;
     }
 
-    public void setStufenId(Long stufenId) {
-        this.stufenId = stufenId;
+    public void setStufe(Stufe stufe) {
+        this.stufe = stufe;
     }
 
     public String getUsername() {
@@ -113,7 +111,7 @@ public class Schueler {
         if (o == null || getClass() != o.getClass()) return false;
         Schueler schueler = (Schueler) o;
         return Objects.equals(id, schueler.id) &&
-                Objects.equals(stufenId, schueler.stufenId) &&
+                stufe.equals(schueler.stufe) &&
                 Objects.equals(username, schueler.username) &&
                 Objects.equals(password, schueler.password) &&
                 Objects.equals(firstname, schueler.firstname) &&
@@ -123,6 +121,6 @@ public class Schueler {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stufenId, username, password, firstname, lastname, kurse);
+        return Objects.hash(id, stufe, username, password, firstname, lastname, kurse);
     }
 }

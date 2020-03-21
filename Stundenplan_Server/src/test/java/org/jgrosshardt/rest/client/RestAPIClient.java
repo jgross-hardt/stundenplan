@@ -1,8 +1,5 @@
 package org.jgrosshardt.rest.client;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
@@ -30,7 +27,7 @@ public class RestAPIClient {
         response = client.target(URL + path).request().get();
 
     }
-
+/*
     public void testArtistDeserialization() {
         response = client.target(baseUrl + "jsonString").request().get();
         this.assertResponse(baseUrl + "jsonString", response);
@@ -84,4 +81,6 @@ public class RestAPIClient {
 
         response.close();
     }
+
+ */
 }

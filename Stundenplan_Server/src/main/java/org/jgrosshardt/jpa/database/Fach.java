@@ -10,26 +10,29 @@ public class Fach {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Fach-ID")
+    @Column(name = "`Fach-ID`")
     private Long id;
 
     @Column(name = "Fach", length = 255)
     private String fach;
 
+    @Column(name = "Kuerzel")
+    private String shorthand;
+
     @ManyToMany
     @JoinTable(
-            name = "fach-lehrer",
-            joinColumns = @JoinColumn(name = "Lehrer-ID"),
-            inverseJoinColumns = @JoinColumn(name = "Fach-ID")
+            name = "`fach-lehrer`",
+            joinColumns = @JoinColumn(name = "`Lehrer-ID`"),
+            inverseJoinColumns = @JoinColumn(name = "`Fach-ID`")
     )
     private Set<Lehrer> lehrer;
 
     public Fach() {
     }
 
-    public Fach(Long id, String fach) {
-        this.id = id;
+    public Fach(String fach, String shorthand) {
         this.fach = fach;
+        this.shorthand = shorthand;
     }
 
     public Long getId() {
@@ -46,6 +49,14 @@ public class Fach {
 
     public void setFach(String fach) {
         this.fach = fach;
+    }
+
+    public String getShorthand() {
+        return shorthand;
+    }
+
+    public void setShorthand(String shorthand) {
+        this.shorthand = shorthand;
     }
 
     public Set<Lehrer> getLehrer() {
@@ -69,5 +80,10 @@ public class Fach {
     @Override
     public int hashCode() {
         return Objects.hash(id, fach, lehrer);
+    }
+
+    @Override
+    public String toString() {
+        return fach;
     }
 }

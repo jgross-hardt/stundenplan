@@ -10,7 +10,7 @@ public class Lehrer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Lehrer-ID")
+    @Column(name = "`Lehrer-ID`")
     private Long id;
 
     @Column(name = "Nachname")
@@ -100,5 +100,10 @@ public class Lehrer {
     @Override
     public int hashCode() {
         return Objects.hash(id, lastname, gender, shorthand);
+    }
+
+    @Override
+    public String toString() {
+        return (gender == 'm' ? "Herr " : (gender == 'w' ? "Frau " : ""))+ lastname;
     }
 }

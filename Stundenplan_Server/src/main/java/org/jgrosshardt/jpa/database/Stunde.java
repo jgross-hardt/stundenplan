@@ -10,7 +10,7 @@ public class Stunde {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Stunden-ID")
+    @Column(name = "`Stunden-ID`")
     private Long id;
 
     @Column(name = "Tag", length = 3)
@@ -19,7 +19,7 @@ public class Stunde {
     @Column(name = "Stunde", length = 3)
     private int stunde;
 
-    @ManyToMany(mappedBy = "kurse")
+    @ManyToMany(mappedBy = "stunden")
     private Set<Kurs> kurse;
 
     public Stunde() {

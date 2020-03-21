@@ -16,4 +16,5 @@ public interface AuthServicesInterface {
     @Produces({ MediaType.APPLICATION_JSON })
     String generateToken(@QueryParam("username") String username, @QueryParam("password") String password);
 
+
 }
