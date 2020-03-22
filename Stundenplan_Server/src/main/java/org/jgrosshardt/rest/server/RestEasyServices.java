@@ -4,6 +4,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.jgrosshardt.rest.JWTFilter.JWTTokenNeededFilter;
+import org.jgrosshardt.rest.JWTFilter.JWTUserAuthNeededFilter;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -15,8 +16,9 @@ public class RestEasyServices extends Application {
     private Set<Object> singletons = new HashSet<>();
 
     public RestEasyServices() {
-        singletons.add(new StundenplanService());
+        singletons.add(new StundenplanSchuelerService());
         singletons.add(new JWTTokenNeededFilter());
+        singletons.add(new JWTUserAuthNeededFilter());
     }
 
     @Override

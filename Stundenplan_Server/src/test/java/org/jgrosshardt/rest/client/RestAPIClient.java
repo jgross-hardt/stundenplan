@@ -30,7 +30,7 @@ public class RestAPIClient {
     private String URL;
 
     public RestAPIClient() {
-        URL = ServerURL + ":" + port + "/Stundenplan_Server/stundenplan/auth/";
+        URL = ServerURL + ":" + port + "/Stundenplan_Server/stundenplan/schueler/";
         client = ClientBuilder.newClient();
     }
 
@@ -48,7 +48,7 @@ public class RestAPIClient {
 
     @Test
     public void testJWT() {
-        String token = JWT.createJWT("test", "hjklhjhkj", "kuiopoiop", 30_000L);
+        String token = JWT.createJWT("hjklhjhkj", "kuiopoiop", 30_000L, true);
         Claims claims = JWT.decodeJWT(token);
         claims.forEach((k, v) -> {
             System.err.println(k + "=>" + v);
@@ -85,11 +85,9 @@ public class RestAPIClient {
         assertNotEquals("Expected names of message does not match", testMsg, response.readEntity(String.class));
         
         // login
-        response = withTarget("login", target -> {
-            return target //
-                    .queryParam("username", "jkljkj") //
-                    .queryParam("password", "ttt");
-        }).request().header(HttpHeaders.AUTHORIZATION, "").get();
+        response = withTarget("login", target -> target
+                .queryParam("username", "ysprenger")
+                .queryParam("password", "abc123")).request().header(HttpHeaders.AUTHORIZATION, "").get();
 
         assertTrue("Expected status does not match", response.getStatus() == 200);
         String token = response.readEntity(String.class);

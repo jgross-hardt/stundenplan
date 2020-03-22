@@ -1,5 +1,6 @@
 package org.jgrosshardt.rest.JWTFilter;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureException;
 
 import javax.ws.rs.Priorities;
@@ -13,9 +14,9 @@ import javax.annotation.Priority;
 import java.io.IOException;
 
 @Provider
-@JWTTokenNeeded
+@JWTUserAuthNeeded
 @Priority(Priorities.AUTHENTICATION)
-public class JWTTokenNeededFilter implements ContainerRequestFilter {
+public class JWTUserAuthNeededFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
@@ -23,9 +24,18 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
         // Get the HTTP Authorization header from the request
         String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
 
+        String path = context.getUriInfo().getPath();
+        if (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        String userID = path.substring(path.lastIndexOf('/'));
+
         //Decode the authorizationHeader and check it
         try {
-            JWT.decodeJWT(authorizationHeader);
+            Claims claims = JWT.decodeJWT(authorizationHeader);
+            if (!userID.equals(claims.get(Claims.SUBJECT))) {
+                context.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+            }
         } catch (SignatureException e) {
             context.abortWith(Response.status(Response.Status.FORBIDDEN).build());
         } catch (IllegalArgumentException e) {

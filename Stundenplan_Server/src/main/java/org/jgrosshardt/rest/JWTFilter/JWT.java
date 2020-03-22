@@ -12,6 +12,7 @@ public class JWT {
 
     //Read the secret key from the private.key file
     private static final String SECRET_KEY;
+
     static {
         try {
             SECRET_KEY = new String(JWT.class.getResourceAsStream("/private.key").readAllBytes());
@@ -21,7 +22,7 @@ public class JWT {
     }
 
     //construct a JWT
-    public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
+    public static String createJWT(String issuer, String subject, long ttlMillis, boolean schueler) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -34,10 +35,10 @@ public class JWT {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         //Let's set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(id)
-                .setIssuedAt(now)
+        JwtBuilder builder = Jwts.builder().setIssuedAt(now)
                 .setSubject(subject)
                 .setIssuer(issuer)
+                .claim("schueler", schueler)
                 .signWith(signatureAlgorithm, signingKey);
 
         //if it has been specified, let's add the expiration

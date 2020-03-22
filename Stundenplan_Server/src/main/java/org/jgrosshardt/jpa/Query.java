@@ -17,21 +17,8 @@ public class Query {
     private static EntityManager entityManager;
 
     public static void setup() {
-
-        InputStream is = Query.class.getResourceAsStream("/META-INF/persistence.xml");
-        try {
-            String s = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            System.out.println(s);
-        } catch (IOException ignored) {
-        }
-
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan");
         entityManager = factory.createEntityManager();
-
-        Map<String, Object> properties = factory.getProperties();
-        for (String s : properties.keySet()) {
-            System.err.println(s + " : " + properties.get(s));
-        }
     }
 
     public static void shutdown() {
