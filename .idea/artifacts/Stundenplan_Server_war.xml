@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Stundenplan_Server:war">
+    <output-path>$PROJECT_DIR$/Stundenplan_Server/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Stundenplan_Server</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Stundenplan_Server-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Stundenplan_Server:war exploded" />
+    </root>
+  </artifact>
+</component>

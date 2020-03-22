@@ -58,6 +58,6 @@ public class Stufe {
 
     @Override
     public String toString() {
-        return "Stufe " + stufe;
+        return stufe;
     }
 }

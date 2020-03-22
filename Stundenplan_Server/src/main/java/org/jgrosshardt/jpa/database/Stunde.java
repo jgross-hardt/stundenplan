@@ -85,20 +85,20 @@ public class Stunde {
 
     private static String tagFromInt(short tag) {
         switch (tag) {
-        case 0:
-            return "MO";
         case 1:
-            return "DI";
+            return "Mo";
         case 2:
-            return "MI";
+            return "Di";
         case 3:
-            return "DO";
+            return "Mi";
         case 4:
-            return "FR";
+            return "Do";
         case 5:
-            return "SA";
+            return "Fr";
         case 6:
-            return "SO";
+            return "Sa";
+        case 7:
+            return "So";
         default:
             return "##";
         }

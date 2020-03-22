@@ -2,6 +2,7 @@ package org.jgrosshardt.rest.JWTFilter;
 
 import io.jsonwebtoken.SignatureException;
 
+import javax.ws.rs.NameBinding;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -22,15 +23,14 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
         // Get the HTTP Authorization header from the request
         String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        // "X-Auth-Token"
 
-        // Extract the token from the HTTP Authorization header
-        // String token = authorizationHeader.substring("Bearer".length()).trim();
+        //containerRequestContext.getUriInfo().getPath()
 
+        //Decode the authorizationHeader and check it
         try {
             JWT.decodeJWT(authorizationHeader);
         } catch (SignatureException e) {
-            containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());            
+            containerRequestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
         } catch (IllegalArgumentException e) {
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }

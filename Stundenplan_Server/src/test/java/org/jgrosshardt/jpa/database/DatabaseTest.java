@@ -1,6 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +20,10 @@ public class DatabaseTest {
     public static void setup() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan");
         entityManager = factory.createEntityManager();
+        Map<String, Object> properties = factory.getProperties();
+        for (String s: properties.keySet()) {
+            System.err.println(s + " : " + properties.get(s));
+        }
         // Employee employee = new Employee();
         // employee.setEmpNumber("hans");
         // employee.setAge(15);

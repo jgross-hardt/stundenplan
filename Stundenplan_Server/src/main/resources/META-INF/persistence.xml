@@ -19,7 +19,8 @@
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mariadb://pippin2:3316/stundenplandb" />
 			<property name="javax.persistence.jdbc.user" value="justus" />
-			<property name="javax.persistence.jdbc.password" value="MtzfJdJl1§2" />
+			<property name="javax.persistence.jdbc.password" value="MtzfJdJl12" />
+			<property name="passwordCharacterEncoding" value="UTF-8"/>
 			<!-- <property name="javax.persistence.sql-load-script-source" value="queryparams.sql" /> -->
 			<!-- hibernate options -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect" />

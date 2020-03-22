@@ -1,11 +1,18 @@
 package org.jgrosshardt.rest.server;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jgrosshardt.jpa.Query;
+import org.jgrosshardt.jpa.database.Fach;
 import org.jgrosshardt.rest.JWTFilter.JWT;
 import org.jgrosshardt.rest.JWTFilter.JWTTokenNeeded;
+
+import java.util.List;
 
 @Path("/auth")
 public class StundenplanService {
@@ -48,6 +55,23 @@ public class StundenplanService {
 
     private boolean authenticate(String username, String password) {
         return true;
+    }
+
+
+    @GET
+    @Path("/faecherauswahl")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public String[] getFaecherList() {
+        Query.setup();
+        Query query = new Query();
+        List<Fach> results = query.query("select f from Fach f", Fach.class);
+        Query.shutdown();
+        int length = results.size();
+        String[] faecher = new String[length];
+        for (int i = 0; i < length; i++) {
+            faecher[i] = results.get(i).getFach();
+        }
+        return faecher;
     }
 
 /*

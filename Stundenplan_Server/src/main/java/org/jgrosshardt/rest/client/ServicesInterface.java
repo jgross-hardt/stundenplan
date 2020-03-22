@@ -31,6 +31,11 @@ public interface ServicesInterface {
     Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password);
 
     @GET
+    @Path("/faecherauswahl")
+    @Produces({ MediaType.APPLICATION_JSON })
+    Response getFaecherList();
+
+    @GET
     @Path("/register")
     @Produces({ MediaType.APPLICATION_JSON })
     Response generateToken(@FormParam("username") String username, @FormParam("password") String password);
