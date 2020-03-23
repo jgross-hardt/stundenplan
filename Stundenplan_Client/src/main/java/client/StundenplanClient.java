@@ -18,7 +18,7 @@ public class StundenplanClient implements StundenplanAPI {
 
     private class JWTFilter implements ClientRequestFilter, ClientResponseFilter {
         @Override
-        public void filter(ClientRequestContext requestContext) throws IOException {
+        public void filter(ClientRequestContext requestContext) {
             if (token != null) {
                 requestContext.getHeaders().add(HttpHeaders.AUTHORIZATION, token);
             }
