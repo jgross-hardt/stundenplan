@@ -1,3 +1,5 @@
+package database;
+
 public class NeuerNutzer {
 
     private String vorname;
