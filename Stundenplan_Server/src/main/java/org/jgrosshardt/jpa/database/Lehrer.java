@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -17,9 +19,11 @@ public class Lehrer {
     private String kuerzel;
 
     @ManyToMany(mappedBy = "lehrer", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Fach> faecher;
 
     @OneToMany(mappedBy = "lehrer", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Kurs> kurse;
 
     public Lehrer() {

@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -16,6 +18,7 @@ public class Stunde {
     private short stunde;
 
     @ManyToMany(mappedBy = "stunden")
+    @JsonIgnore
     private Set<Kurs> kurse;
 
     public Stunde() {

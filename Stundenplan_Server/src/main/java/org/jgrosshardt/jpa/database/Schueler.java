@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class Schueler {
             joinColumns = @JoinColumn(name = "schuelerId"),
             inverseJoinColumns = @JoinColumn(name = "kursId")
     )
+    @JsonIgnore
     private Set<Kurs> kurse;
 
     public Schueler() {

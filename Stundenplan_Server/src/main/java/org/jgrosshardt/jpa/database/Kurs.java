@@ -2,6 +2,7 @@ package org.jgrosshardt.jpa.database;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jgrosshardt.jpa.database.util.Strings;
 
 import java.util.Objects;
@@ -30,6 +31,7 @@ public class Kurs {
     private Lehrer lehrer;
 
     @ManyToMany(mappedBy = "kurse", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Schueler> schueler;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,6 +40,7 @@ public class Kurs {
             joinColumns = @JoinColumn(name = "kursId"),
             inverseJoinColumns = @JoinColumn(name = "stundenId")
     )
+    @JsonIgnore
     private Set<Stunde> stunden;
 
     public Kurs() {

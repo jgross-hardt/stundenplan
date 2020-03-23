@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +17,7 @@ public class Stufe {
     private String stufe;
 
     @OneToMany(mappedBy = "stufe", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Schueler> schueler;
 
     public Stufe() {
