@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "schueler")
 public class Schueler {
 
     @Id
@@ -16,7 +17,10 @@ public class Schueler {
     private Stufe stufe;
 
     private String benutzername;
-    private String passwort;
+
+    @Column(name = "passwort")
+    private String passwortHash;
+
     private String vorname;
     private String nachname;
 
@@ -31,10 +35,10 @@ public class Schueler {
     public Schueler() {
     }
 
-    public Schueler(Stufe stufe, String benutzername, String passwort, String vorname, String nachname) {
+    public Schueler(Stufe stufe, String benutzername, String passwortHash, String vorname, String nachname) {
         this.stufe = stufe;
         this.benutzername = benutzername;
-        this.passwort = passwort;
+        this.passwortHash = passwortHash;
         this.vorname = vorname;
         this.nachname = nachname;
     }
@@ -63,12 +67,12 @@ public class Schueler {
         this.benutzername = username;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getPasswortHash() {
+        return passwortHash;
     }
 
-    public void setPasswort(String password) {
-        this.passwort = password;
+    public void setPasswortHash(String password) {
+        this.passwortHash = password;
     }
 
     public String getVorname() {
@@ -103,18 +107,18 @@ public class Schueler {
         return Objects.equals(id, schueler.id) &&
                 Objects.equals(stufe, schueler.stufe) &&
                 Objects.equals(benutzername, schueler.benutzername) &&
-                Objects.equals(passwort, schueler.passwort) &&
+                Objects.equals(passwortHash, schueler.passwortHash) &&
                 Objects.equals(vorname, schueler.vorname) &&
                 Objects.equals(nachname, schueler.nachname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stufe, benutzername, passwort, vorname, nachname);
+        return Objects.hash(id, stufe, benutzername, passwortHash, vorname, nachname);
     }
 
     public String toFullString() {
-        String header = vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwort + ")";
+        String header = vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwortHash + ")";
         for (Kurs kurs : kurse) {
             header += kurs.getBezeichnung() + "\n";
         }

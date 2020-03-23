@@ -4,15 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 
 import org.jgrosshardt.rest.JWTFilter.JWT;
+import org.jgrosshardt.rest.server.PasswordHash;
 import org.junit.Test;
 
 import io.jsonwebtoken.Claims;
@@ -47,6 +51,18 @@ public class RestAPIClient {
     }
 
     @Test
+    public void testHash() {
+        String password = "abc123";
+        String salt = PasswordHash.generateSalt();
+        String hash1 = PasswordHash.computeHash(password, salt);
+        String hash2 = PasswordHash.computeHash(password, PasswordHash.base64ToBytes(salt));
+        assertEquals(hash1, hash2);
+        System.out.println(hash1);
+        assertEquals(salt, PasswordHash.bytesToBase64(PasswordHash.base64ToBytes(salt)));
+        System.out.println(salt);
+    }
+
+    @Test
     public void testJWT() {
         String token = JWT.createJWT("hjklhjhkj", "kuiopoiop", 30_000L, true);
         Claims claims = JWT.decodeJWT(token);
@@ -77,26 +93,24 @@ public class RestAPIClient {
         String testMsg = "Dies ist ein Test";
         
         // attempt, which fails
-        response = withTarget("echo_auth", target -> {
-            return target.queryParam("message", testMsg);
-        }).request().header(HttpHeaders.AUTHORIZATION, "").get();
+        response = withTarget("echo_auth", target -> target.queryParam("message", testMsg)).request().header(HttpHeaders.AUTHORIZATION, "").get();
 
         assertTrue("Expected status does not match", response.getStatus() != 200);
         assertNotEquals("Expected names of message does not match", testMsg, response.readEntity(String.class));
         
         // login
-        response = withTarget("login", target -> target
-                .queryParam("username", "ysprenger")
-                .queryParam("password", "abc123")).request().header(HttpHeaders.AUTHORIZATION, "").get();
+        Map<String, String> formParams = new HashMap<>();
+        formParams.put("username", "ysprenger");
+        formParams.put("password", "abc123");
 
-        assertTrue("Expected status does not match", response.getStatus() == 200);
+        response = withTarget("login", target -> target).request().header(HttpHeaders.AUTHORIZATION, "").post(Entity.json(formParams));
+
+        assertEquals("Expected status does not match", 200, response.getStatus());
         String token = response.readEntity(String.class);
 
         // attempt, which succeeds
-        response = withTarget("echo_auth", target -> {
-            return target //
-                    .queryParam("message", testMsg);
-        }).request().header(HttpHeaders.AUTHORIZATION, token).get();
+        response = withTarget("echo_auth", target -> target
+                .queryParam("message", testMsg)).request().header(HttpHeaders.AUTHORIZATION, token).get();
 
         assertTrue("Expected status does not match", response.getStatus() == 200);
         assertEquals("Expected names of message does not match", testMsg, response.readEntity(String.class));

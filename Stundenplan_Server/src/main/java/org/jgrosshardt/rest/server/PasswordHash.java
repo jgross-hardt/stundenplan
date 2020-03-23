@@ -33,6 +33,24 @@ public class PasswordHash {
         return "";
     }
 
+    //TODO Remove this test method
+    public static String computeHash(String password, byte[] saltBytes) {
+        //Convert the password to a byte array
+        byte[] passwordBytes = password.getBytes();
+        //Concatenate the two arrays
+        byte[] data = ArrayUtils.addAll(saltBytes, passwordBytes);
+        try {
+            //Compute the SHA-512 hash of the byte array
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            byte[] result = digest.digest(data);
+            //Convert to base64 and return
+            return Base64.getUrlEncoder().encodeToString(result);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
     //Salt has the same length of hash output for maximum security (64 bytes = 512 bits)
     private static final int SALT_LENGTH = 64;
     /**
@@ -45,6 +63,14 @@ public class PasswordHash {
         byte[] salt = new byte[SALT_LENGTH];
         new SecureRandom().nextBytes(salt);
         //Convert to base64 and return
-        return Base64.getUrlEncoder().encodeToString(salt);
+        return bytesToBase64(salt);
+    }
+
+    public static byte[] base64ToBytes(String base64) {
+        return Base64.getUrlDecoder().decode(base64);
+    }
+
+    public static String bytesToBase64(byte[] bytes) {
+        return Base64.getUrlEncoder().encodeToString(bytes);
     }
 }

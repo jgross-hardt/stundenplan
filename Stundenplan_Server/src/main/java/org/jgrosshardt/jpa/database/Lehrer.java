@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "lehrer")
 public class Lehrer {
 
     @Id
@@ -13,7 +14,7 @@ public class Lehrer {
 
     private String nachname;
     private String anrede;
-    private String shorthand;
+    private String kuerzel;
 
     @ManyToMany(mappedBy = "lehrer", fetch = FetchType.LAZY)
     private Set<Fach> faecher;
@@ -25,10 +26,10 @@ public class Lehrer {
 
     }
 
-    public Lehrer(String nachname, String anrede, String shorthand) {
+    public Lehrer(String nachname, String anrede, String kuerzel) {
         this.nachname = nachname;
         this.anrede = anrede;
-        this.shorthand = shorthand;
+        this.kuerzel = kuerzel;
     }
 
     public Integer getId() {
@@ -55,12 +56,12 @@ public class Lehrer {
         this.anrede = gender;
     }
 
-    public String getShorthand() {
-        return shorthand;
+    public String getKuerzel() {
+        return kuerzel;
     }
 
-    public void setShorthand(String shorthand) {
-        this.shorthand = shorthand;
+    public void setKuerzel(String shorthand) {
+        this.kuerzel = shorthand;
     }
 
     public Set<Fach> getFaecher() {
@@ -87,12 +88,12 @@ public class Lehrer {
         return id == lehrer.id &&
                 anrede == lehrer.anrede &&
                 Objects.equals(nachname, lehrer.nachname) &&
-                Objects.equals(shorthand, lehrer.shorthand);
+                Objects.equals(kuerzel, lehrer.kuerzel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nachname, anrede, shorthand);
+        return Objects.hash(id, nachname, anrede, kuerzel);
     }
 
     @Override

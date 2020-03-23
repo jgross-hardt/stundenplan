@@ -61,26 +61,38 @@ public class StundenplanSchuelerService {
     @POST
     @Path("/login")
     @Produces({ MediaType.TEXT_PLAIN })
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    public String authenticateUser(@FormParam("username") String username, @FormParam("password") String password) {
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
+    public String authenticateUser(@QueryParam("username") String username, @QueryParam("password") String password) {
 
         //if username and password are correct
-        if (authenticate(username, password))
-        //Create a JWT Token that is valid for 10 min. and return it
-        return JWT.createJWT("stundenplan", username, 600_000L, true);
+        if (authenticate(username, password)) {
+            //Create a JWT Token that is valid for 10 min. and return it
+            return JWT.createJWT("stundenplan", username, 600_000L, true);
+        }
         //Return an empty string if the authorization was unsuccessful
         return "";
     }
 
     private boolean authenticate(String username, String password) {
-        System.err.println(query != null);
-        List<Schueler> users = query.query("select s from Schueler s where username = '" + username.replace("'", "''") + "'", Schueler.class);
-        if (users.size() != 1) {
+        if (username == null || password == null) {
             return false;
         }
-        Schueler user = users.get(0);
+
+        List<Schueler> schueler = query.query("select s from Schueler s where nutzername = '" + username.replace("'", "''") + "'", Schueler.class);
+        if (schueler.size() != 1) {
+            return false;
+        }
+        Schueler user = schueler.get(0);
         //TODO implement hash
-        return user.getPasswort().equals(password);
+        return user.getPasswortHash().equals(password);
+    }
+
+    @POST
+    @Path("/register")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response registerUser() {
+        //TODO
+        return null;
     }
 
     /**

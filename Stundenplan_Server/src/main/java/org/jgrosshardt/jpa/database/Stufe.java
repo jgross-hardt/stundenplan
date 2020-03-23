@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "stufe")
 public class Stufe {
 
     @Id

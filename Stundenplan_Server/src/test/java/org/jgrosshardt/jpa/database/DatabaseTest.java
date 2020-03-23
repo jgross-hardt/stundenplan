@@ -75,7 +75,7 @@ public class DatabaseTest {
         s.setVorname("Justus");
         s.setNachname("Groß-Hardt");
         s.setBenutzername("jgrosshardt");
-        s.setPasswort("12345");
+        s.setPasswortHash("12345");
         s.setStufe(stufen.getSingleResult());
 
         entityManager.getTransaction().begin();

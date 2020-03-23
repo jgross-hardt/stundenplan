@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import org.jgrosshardt.rest.server.PasswordHash;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -14,15 +16,31 @@ public class Unbestaetigt {
     private String vorname;
     private String nachname;
     private String benutzername;
-    private String passwort;
+
+    @Column(name = "passwort")
+    private String passwortHash;
+
+    private String salt;
     private String bestaetigungs_schluessel;
 
-    public Unbestaetigt(String vorname, String nachname, String benutzername, String passwort, String bestaetigungs_schluessel) {
+    public Unbestaetigt() {
+    }
+
+    public Unbestaetigt(String vorname, String nachname, String benutzername, String passwortHash, String salt, String bestaetigungs_schluessel) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.benutzername = benutzername;
-        this.passwort = passwort;
+        this.passwortHash = passwortHash;
+        this.salt = salt;
         this.bestaetigungs_schluessel = bestaetigungs_schluessel;
+    }
+
+    public Unbestaetigt(NeuerNutzer nutzer) {
+        this.vorname = nutzer.getVorname();
+        this.nachname = nutzer.getNachname();
+        this.benutzername = nutzer.getBenutzername();
+        this.salt = PasswordHash.generateSalt();
+        this.passwortHash = PasswordHash.computeHash(nutzer.getPasswort(), salt);
     }
 
     public Integer getId() {
@@ -57,12 +75,20 @@ public class Unbestaetigt {
         this.benutzername = benutzername;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getPasswortHash() {
+        return passwortHash;
     }
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+    public void setPasswortHash(String passwortHash) {
+        this.passwortHash = passwortHash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getBestaetigungs_schluessel() {
@@ -87,12 +113,12 @@ public class Unbestaetigt {
                 Objects.equals(vorname, that.vorname) &&
                 Objects.equals(nachname, that.nachname) &&
                 Objects.equals(benutzername, that.benutzername) &&
-                Objects.equals(passwort, that.passwort) &&
+                Objects.equals(passwortHash, that.passwortHash) &&
                 Objects.equals(bestaetigungs_schluessel, that.bestaetigungs_schluessel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, vorname, nachname, benutzername, passwort, bestaetigungs_schluessel);
+        return Objects.hash(id, vorname, nachname, benutzername, passwortHash, bestaetigungs_schluessel);
     }
 }
