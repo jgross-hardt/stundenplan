@@ -1,9 +1,8 @@
 package org.jgrosshardt.rest.server;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class PasswordHash {
@@ -20,25 +19,8 @@ public class PasswordHash {
         //Convert the salt to a byte array
         byte[] saltBytes = Base64.getUrlDecoder().decode(salt);
         //Concatenate the two arrays
-        byte[] data = ArrayUtils.addAll(saltBytes, passwordBytes);
-        try {
-            //Compute the SHA-512 hash of the byte array
-            MessageDigest digest = MessageDigest.getInstance("SHA-512");
-            byte[] result = digest.digest(data);
-            //Convert to base64 and return
-            return Base64.getUrlEncoder().encodeToString(result);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "";
-    }
-
-    //TODO Remove this test method
-    public static String computeHash(String password, byte[] saltBytes) {
-        //Convert the password to a byte array
-        byte[] passwordBytes = password.getBytes();
-        //Concatenate the two arrays
-        byte[] data = ArrayUtils.addAll(saltBytes, passwordBytes);
+        byte[] data = Arrays.copyOf(saltBytes, saltBytes.length + passwordBytes.length);
+        System.arraycopy(passwordBytes, 0, data, saltBytes.length, passwordBytes.length);
         try {
             //Compute the SHA-512 hash of the byte array
             MessageDigest digest = MessageDigest.getInstance("SHA-512");

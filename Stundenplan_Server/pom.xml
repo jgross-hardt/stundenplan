@@ -63,18 +63,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.10.1</version>
-        </dependency>
 
         <!-- Runtime REST API: client implementation -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
             <version>4.5.2.Final</version>
-            <scope>runtime</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.ws.rs</groupId>
@@ -88,19 +82,11 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
             <version>4.5.2.Final</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
             <version>4.5.2.Final</version>
-            <scope>runtime</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!--Compile Time JPA API -->
@@ -149,6 +135,11 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>4.5.2.Final</version>
         </dependency>
 
     </dependencies>

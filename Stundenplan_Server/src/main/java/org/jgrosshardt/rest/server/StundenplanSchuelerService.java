@@ -6,7 +6,9 @@ import javax.ws.rs.core.Response;
 
 import org.jgrosshardt.jpa.Query;
 import org.jgrosshardt.jpa.database.Fach;
+import org.jgrosshardt.jpa.database.NeuerNutzer;
 import org.jgrosshardt.jpa.database.Schueler;
+import org.jgrosshardt.jpa.database.Unbestaetigt;
 import org.jgrosshardt.rest.JWTFilter.JWT;
 import org.jgrosshardt.rest.JWTFilter.JWTTokenNeeded;
 
@@ -78,19 +80,29 @@ public class StundenplanSchuelerService {
             return false;
         }
 
-        List<Schueler> schueler = query.query("select s from Schueler s where nutzername = '" + username.replace("'", "''") + "'", Schueler.class);
-        if (schueler.size() != 1) {
+        Schueler user = query.getSchueler(username);
+        if (user == null) {
             return false;
         }
-        Schueler user = schueler.get(0);
-        //TODO implement hash
-        return user.getPasswortHash().equals(password);
+
+        String salt = user.getSalt();
+        return user.getPasswortHash().equals(PasswordHash.computeHash(password, salt));
     }
+
+    //TODO read from config
+    private static final boolean confirmationRequired = false;
 
     @POST
     @Path("/register")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response registerUser() {
+    public Response registerUser(NeuerNutzer nutzer) {
+        if (confirmationRequired) {
+            Unbestaetigt user = new Unbestaetigt(nutzer);
+            query.persist(user);
+        } else {
+            Schueler schueler = new Schueler(nutzer);
+            query.persist(schueler);
+        }
         //TODO
         return null;
     }
@@ -119,74 +131,15 @@ public class StundenplanSchuelerService {
         return faecher;
     }
 
-/*
     @GET
-    @Path("/getinfo")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Movie movieByImdbId(@QueryParam("imdbId") String imdbId) {
+    @Path("/schueler-mit-faechern/${benutzername}")
+    @Produces({ MediaType.APPLICATION_JSON })
+    @JWTTokenNeeded
+    public Schueler getSchuelerMitFaechern(@PathParam("benutzername") String benutzername) {
 
-        System.out.println("*** Calling  getinfo for a given ImdbID***");
-
-        if (inventory.containsKey(imdbId)) {
-            return inventory.get(imdbId);
-        } else {
-            return null;
-        }
+        Schueler schueler = query.getSchueler(benutzername);
+        System.err.println(schueler.toFullString());
+        // return the user
+        return schueler;
     }
-
-    @POST
-    @Path("/addmovie")
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response addMovie(Movie movie) {
-
-        System.out.println("*** Calling  addMovie ***");
-
-        if (null != inventory.get(movie.getImdbId())) {
-            return Response.status(Response.Status.NOT_MODIFIED)
-                    .entity("Movie is Already in the database.").build();
-        }
-
-        inventory.put(movie.getImdbId(), movie);
-        return Response.status(Response.Status.CREATED).build();
-    }
-
-    @PUT
-    @Path("/updatemovie")
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response updateMovie(Movie movie) {
-
-        System.out.println("*** Calling  updateMovie ***");
-
-        if (null == inventory.get(movie.getImdbId())) {
-            return Response.status(Response.Status.NOT_MODIFIED)
-                    .entity("Movie is not in the database.\nUnable to Update").build();
-        }
-
-        inventory.put(movie.getImdbId(), movie);
-        return Response.status(Response.Status.OK).build();
-    }
-
-    @DELETE
-    @Path("/deletemovie")
-    public Response deleteMovie(@QueryParam("imdbId") String imdbId) {
-
-        System.out.println("*** Calling  deleteMovie ***");
-
-        if (null == inventory.get(imdbId)) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Movie is not in the database.\nUnable to Delete").build();
-        }
-
-        inventory.remove(imdbId);
-        return Response.status(Response.Status.OK).build();
-    }
-
-    @GET
-    @Path("/listmovies")
-    @Produces({ "application/json" })
-    public List<Movie> listMovies() {
-        return inventory.values().stream().collect(Collectors.toCollection(ArrayList::new));
-    }
-
- */
 }

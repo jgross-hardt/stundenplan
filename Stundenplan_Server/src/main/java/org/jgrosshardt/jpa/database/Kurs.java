@@ -40,7 +40,6 @@ public class Kurs {
             joinColumns = @JoinColumn(name = "kursId"),
             inverseJoinColumns = @JoinColumn(name = "stundenId")
     )
-    @JsonIgnore
     private Set<Stunde> stunden;
 
     public Kurs() {

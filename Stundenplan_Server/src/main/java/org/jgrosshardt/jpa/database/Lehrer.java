@@ -27,7 +27,6 @@ public class Lehrer {
     private Set<Kurs> kurse;
 
     public Lehrer() {
-
     }
 
     public Lehrer(String nachname, String anrede, String kuerzel) {
@@ -48,24 +47,24 @@ public class Lehrer {
         return nachname;
     }
 
-    public void setNachname(String lastname) {
-        this.nachname = lastname;
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
     }
 
     public String getAnrede() {
         return anrede;
     }
 
-    public void setAnrede(String gender) {
-        this.anrede = gender;
+    public void setAnrede(String anrede) {
+        this.anrede = anrede;
     }
 
     public String getKuerzel() {
         return kuerzel;
     }
 
-    public void setKuerzel(String shorthand) {
-        this.kuerzel = shorthand;
+    public void setKuerzel(String kuerzel) {
+        this.kuerzel = kuerzel;
     }
 
     public Set<Fach> getFaecher() {
