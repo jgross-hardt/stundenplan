@@ -6,8 +6,8 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="stundenplan" value="d46cb7bb-ef72-4652-aa8d-a267d5fb94da" />
-          <factory-entry name="stundenplan-test" />
+          <factory-entry name="stundenplan" value="561d88cb-f208-4678-b188-7e001397f266" />
+          <factory-entry name="stundenplan-test" value="561d88cb-f208-4678-b188-7e001397f266" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="stundenplan" />

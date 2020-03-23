@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Stundenplan_Server">
+  <artifact type="exploded-war" build-on-make="true" name="Stundenplan_Server">
     <output-path>$PROJECT_DIR$/out/artifacts/Stundenplan_Server</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">

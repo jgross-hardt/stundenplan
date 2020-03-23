@@ -90,7 +90,7 @@
 
     <build>
         <sourceDirectory>${basedir}/src</sourceDirectory>
-        <testSourceDirectory>${basedir}/src-test</testSourceDirectory>
+        <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
         <resources>
             <resource>
                 <directory>${basedir}/src</directory>
