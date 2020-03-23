@@ -1,5 +1,3 @@
-/Stundenplan_Client/out/
+/Stundenplan_Client/target/*
 /Stundenplan_Server/target/*
 /Stundenplan_Server/src/main/resources/private.key
-/.idea/misc.xml
-*.iml
