@@ -105,7 +105,7 @@ public class StundenplanSchuelerService {
     @GET
     @Path("/faecherauswahl")
     @Produces({ MediaType.APPLICATION_JSON })
-    @JWTTokenNeeded
+    //@JWTTokenNeeded
     public Fach[] getFaecherList() {
         //Retrieve a List of all subjects from the database
         List<Fach> results = query.query("select f from Fach f", Fach.class);
