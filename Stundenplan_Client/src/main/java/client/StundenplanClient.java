@@ -7,6 +7,7 @@ import database.Schueler;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -29,7 +30,7 @@ public class StundenplanClient implements StundenplanAPI {
                 ClientResponseContext responseContext) throws IOException {
             String body = new String(responseContext.getEntityStream().readAllBytes());
 
-            if (responseContext.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
+            if (!body.equals("") &&responseContext.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
@@ -49,14 +50,21 @@ public class StundenplanClient implements StundenplanAPI {
     public static void main(String... args) {
         StundenplanClient c = new StundenplanClient("ysprenger", "ysprenger".toCharArray());
         System.err.println(c.echo("Testmessage"));
-        System.err.println(c.echoAuth("Testmessage"));
+        try {
+            System.err.println(c.echoAuth("Testmessage"));
+        } catch (NotAuthorizedException e) {
+            e.printStackTrace();
+        }
         Fach[] faecher = c.getFaecherList();
         for (Fach fach : faecher) {
             System.err.println(fach);
         }
-
-        Schueler schueler = c.getSchuelerMitFaechern("ysprenger");
-        System.err.println(schueler.toFullString());
+        try {
+            Schueler schueler = c.getSchuelerMitFaechern("ysprenger");
+            System.err.println(schueler.toFullString());
+        } catch (NotAuthorizedException e) {
+            e.printStackTrace();
+        }
     }
 
     private final ResteasyClient client;
