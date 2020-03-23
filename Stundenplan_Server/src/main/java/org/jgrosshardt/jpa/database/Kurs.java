@@ -18,15 +18,15 @@ public class Kurs {
 
     private String bezeichnung;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fachId")
     private Fach fach;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stufenId")
     private Stufe stufe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lehrerId")
     private Lehrer lehrer;
 
@@ -34,7 +34,7 @@ public class Kurs {
     @JsonIgnore
     private Set<Schueler> schueler;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "kurs_stunde",
             joinColumns = @JoinColumn(name = "kursId"),
@@ -82,6 +82,10 @@ public class Kurs {
 
     public void setStufe(Stufe stufe) {
         this.stufe = stufe;
+    }
+
+    public Lehrer getLehrer() {
+        return lehrer;
     }
 
     public void setLehrer(Lehrer lehrer) {
