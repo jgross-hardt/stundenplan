@@ -1,5 +1,6 @@
 package org.jgrosshardt.jpa;
 import org.jgrosshardt.jpa.database.Fach;
+import org.jgrosshardt.jpa.database.Schueler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,11 +31,28 @@ public class Query {
         return query.getResultList();
     }
 
+    public void persist(Object obj) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(obj);
+        entityManager.getTransaction().commit();
+    }
+
     public static void main(String[] args) {
         setup();
         Query q = new Query();
         List<Fach> list = q.query("select f from Fach f", Fach.class);
         System.out.println(list.get(1));
         shutdown();
+    }
+
+    public Schueler getSchueler(String benutzername) {
+        List<Schueler> schueler = query(
+                "select s from Schueler s where s.benutzername = '" + benutzername.replace("'", "''") + "'",
+                Schueler.class);
+
+        if (schueler.size() != 1) {
+            return null;
+        }
+        return schueler.get(0);
     }
 }

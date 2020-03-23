@@ -1,6 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jgrosshardt.rest.server.PasswordHash;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Schueler {
     @Column(name = "passwort")
     private String passwortHash;
 
+    private String salt;
     private String vorname;
     private String nachname;
 
@@ -32,7 +34,6 @@ public class Schueler {
             joinColumns = @JoinColumn(name = "schuelerId"),
             inverseJoinColumns = @JoinColumn(name = "kursId")
     )
-    @JsonIgnore
     private Set<Kurs> kurse;
 
     public Schueler() {
@@ -44,6 +45,14 @@ public class Schueler {
         this.passwortHash = passwortHash;
         this.vorname = vorname;
         this.nachname = nachname;
+    }
+
+    public Schueler(NeuerNutzer nutzer) {
+        this.vorname = nutzer.getVorname();
+        this.nachname = nutzer.getNachname();
+        this.benutzername = nutzer.getBenutzername();
+        this.salt = PasswordHash.generateSalt();
+        this.passwortHash = PasswordHash.computeHash(nutzer.getPasswort(), salt);
     }
 
     public Integer getId() {
@@ -76,6 +85,14 @@ public class Schueler {
 
     public void setPasswortHash(String password) {
         this.passwortHash = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getVorname() {
@@ -121,11 +138,11 @@ public class Schueler {
     }
 
     public String toFullString() {
-        String header = vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwortHash + ")";
+        StringBuilder header = new StringBuilder(vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwortHash + ")");
         for (Kurs kurs : kurse) {
-            header += kurs.getBezeichnung() + "\n";
+            header.append(kurs.getBezeichnung()).append("\n");
         }
-        return header;
+        return header.toString();
     }
 
     @Override

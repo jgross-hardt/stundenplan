@@ -55,7 +55,7 @@ public class RestAPIClient {
         String password = "abc123";
         String salt = PasswordHash.generateSalt();
         String hash1 = PasswordHash.computeHash(password, salt);
-        String hash2 = PasswordHash.computeHash(password, PasswordHash.base64ToBytes(salt));
+        String hash2 = PasswordHash.computeHash(password, salt);
         assertEquals(hash1, hash2);
         System.out.println(hash1);
         assertEquals(salt, PasswordHash.bytesToBase64(PasswordHash.base64ToBytes(salt)));
