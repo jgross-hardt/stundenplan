@@ -235,6 +235,6 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     public void writeMessage(String pMessage) {
-        //Was passiert mit der Message?
+        //TODO
     }
 }
