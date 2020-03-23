@@ -103,7 +103,6 @@ public class StundenplanSchuelerService {
             Schueler schueler = new Schueler(nutzer);
             query.persist(schueler);
         }
-        //TODO
         return null;
     }
 
