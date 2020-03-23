@@ -1,13 +1,8 @@
-package org.jgrosshardt.rest.client;
-
-import org.jgrosshardt.rest.model.Movie;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
-@Path("")
+@Path("/schueler")
 public interface ServicesInterface {
 
     @GET
