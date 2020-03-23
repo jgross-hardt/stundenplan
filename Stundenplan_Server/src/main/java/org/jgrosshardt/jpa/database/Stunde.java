@@ -5,18 +5,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "stunden")
 public class Stunde {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "`Stunden-ID`")
     private Integer id;
 
-    @Column(name = "Tag", length = 3)
     private short tag;
-
-    @Column(name = "Stunde", length = 3)
     private short stunde;
 
     @ManyToMany(mappedBy = "stunden")

@@ -5,15 +5,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "stufen")
 public class Stufe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "`Stufen-ID`")
     private Integer id;
 
-    @Column(name = "Stufe", length = 255)
     private String stufe;
 
     @OneToMany(mappedBy = "stufe", fetch = FetchType.LAZY)

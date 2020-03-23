@@ -8,27 +8,24 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "kurse")
 public class Kurs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "`Kurs-ID`")
     private Integer id;
 
-    @Column(name = "Kursbezeichnung")
-    private String kursbezeichnung;
+    private String bezeichnung;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`Fach-ID`")
+    @JoinColumn(name = "fachId")
     private Fach fach;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`Stufen-ID`")
+    @JoinColumn(name = "stufenId")
     private Stufe stufe;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`Lehrer-ID`")
+    @JoinColumn(name = "lehrerId")
     private Lehrer lehrer;
 
     @ManyToMany(mappedBy = "kurse", fetch = FetchType.LAZY)
@@ -36,17 +33,17 @@ public class Kurs {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "`kurs-stunde`",
-            joinColumns = @JoinColumn(name = "`Kurs-ID`"),
-            inverseJoinColumns = @JoinColumn(name = "`Stunden-ID`")
+            name = "kurs_stunde",
+            joinColumns = @JoinColumn(name = "kursId"),
+            inverseJoinColumns = @JoinColumn(name = "stundenId")
     )
     private Set<Stunde> stunden;
 
     public Kurs() {
     }
 
-    public Kurs(String kursbezeichnung, Fach fach, Stufe stufe, Lehrer lehrer) {
-        this.kursbezeichnung = kursbezeichnung;
+    public Kurs(String bezeichnung, Fach fach, Stufe stufe, Lehrer lehrer) {
+        this.bezeichnung = bezeichnung;
         this.fach = fach;
         this.stufe = stufe;
         this.lehrer = lehrer;
@@ -60,12 +57,12 @@ public class Kurs {
         this.id = id;
     }
 
-    public String getKursbezeichnung() {
-        return kursbezeichnung;
+    public String getBezeichnung() {
+        return bezeichnung;
     }
 
-    public void setKursbezeichnung(String kursbezeichnung) {
-        this.kursbezeichnung = kursbezeichnung;
+    public void setBezeichnung(String kursbezeichnung) {
+        this.bezeichnung = kursbezeichnung;
     }
 
     public Fach getFach() {
@@ -113,18 +110,18 @@ public class Kurs {
                 stufe.equals(stufe) &&
                 lehrer.equals(lehrer) &&
                 Objects.equals(id, kurs.id) &&
-                Objects.equals(kursbezeichnung, kurs.kursbezeichnung);
+                Objects.equals(bezeichnung, kurs.bezeichnung);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, kursbezeichnung, fach, stufe, lehrer);
+        return Objects.hash(id, bezeichnung, fach, stufe, lehrer);
     }
 
     @Override
     public String toString() {
-        return "Kurs [" + id + ":" + kursbezeichnung + "]\n" + //
-                " Fach    : " + fach.getShorthand() + " (" + fach.getFach() + ")\n" + //
+        return "Kurs [" + id + ":" + bezeichnung + "]\n" + //
+                " Fach    : " + fach.getKuerzel() + " (" + fach.getFach() + ")\n" + //
                 " Stufe   : " + stufe.getStufe() + "\n" + //
                 " Lehrer  : " + lehrer + "\n" + //
                 " Schüler : \n   - " + Strings.join(schueler, "\n   - ") + "\n" + //

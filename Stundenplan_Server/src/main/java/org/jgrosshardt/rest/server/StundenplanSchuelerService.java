@@ -1,11 +1,6 @@
 package org.jgrosshardt.rest.server;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -85,7 +80,7 @@ public class StundenplanSchuelerService {
         }
         Schueler user = users.get(0);
         //TODO implement hash
-        return user.getPassword().equals(password);
+        return user.getPasswort().equals(password);
     }
 
     /**

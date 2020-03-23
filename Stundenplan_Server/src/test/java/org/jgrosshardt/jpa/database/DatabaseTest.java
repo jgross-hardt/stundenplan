@@ -72,10 +72,10 @@ public class DatabaseTest {
         TypedQuery<Stufe> stufen = entityManager.createQuery("select s From Stufe s Where s.stufe = 'EF'", Stufe.class);
 
         Schueler s = new Schueler();
-        s.setFirstname("Justus");
-        s.setLastname("Groß-Hardt");
-        s.setUsername("jgrosshardt");
-        s.setPassword("12345");
+        s.setVorname("Justus");
+        s.setNachname("Groß-Hardt");
+        s.setBenutzername("jgrosshardt");
+        s.setPasswort("12345");
         s.setStufe(stufen.getSingleResult());
 
         entityManager.getTransaction().begin();

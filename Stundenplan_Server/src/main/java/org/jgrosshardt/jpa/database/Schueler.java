@@ -5,47 +5,38 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "schueler")
 public class Schueler {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "`Schueler-ID`")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "`Stufen-ID`")
+    @JoinColumn(name = "stufenId")
     private Stufe stufe;
 
-    @Column(name = "Benutzername")
-    private String username;
-
-    @Column(name = "Passwort")
-    private String password;
-
-    @Column(name = "Vorname")
-    private String firstname;
-
-    @Column(name = "Nachname")
-    private String lastname;
+    private String benutzername;
+    private String passwort;
+    private String vorname;
+    private String nachname;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "`schueler-kurs`",
-            joinColumns = @JoinColumn(name = "`Schueler-ID`"),
-            inverseJoinColumns = @JoinColumn(name = "`Kurs-ID`")
+            name = "schueler_kurs",
+            joinColumns = @JoinColumn(name = "schuelerId"),
+            inverseJoinColumns = @JoinColumn(name = "kursId")
     )
     private Set<Kurs> kurse;
 
     public Schueler() {
     }
 
-    public Schueler(Stufe stufe, String username, String password, String firstname, String lastname) {
+    public Schueler(Stufe stufe, String benutzername, String passwort, String vorname, String nachname) {
         this.stufe = stufe;
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.benutzername = benutzername;
+        this.passwort = passwort;
+        this.vorname = vorname;
+        this.nachname = nachname;
     }
 
     public Integer getId() {
@@ -64,36 +55,36 @@ public class Schueler {
         this.stufe = stufe;
     }
 
-    public String getUsername() {
-        return username;
+    public String getBenutzername() {
+        return benutzername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setBenutzername(String username) {
+        this.benutzername = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswort() {
+        return passwort;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswort(String password) {
+        this.passwort = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getVorname() {
+        return vorname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setVorname(String firstname) {
+        this.vorname = firstname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getNachname() {
+        return nachname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setNachname(String lastname) {
+        this.nachname = lastname;
     }
 
     public Set<Kurs> getKurse() {
@@ -111,27 +102,27 @@ public class Schueler {
         Schueler schueler = (Schueler) o;
         return Objects.equals(id, schueler.id) &&
                 Objects.equals(stufe, schueler.stufe) &&
-                Objects.equals(username, schueler.username) &&
-                Objects.equals(password, schueler.password) &&
-                Objects.equals(firstname, schueler.firstname) &&
-                Objects.equals(lastname, schueler.lastname);
+                Objects.equals(benutzername, schueler.benutzername) &&
+                Objects.equals(passwort, schueler.passwort) &&
+                Objects.equals(vorname, schueler.vorname) &&
+                Objects.equals(nachname, schueler.nachname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stufe, username, password, firstname, lastname);
+        return Objects.hash(id, stufe, benutzername, passwort, vorname, nachname);
     }
 
     public String toFullString() {
-        String header = firstname + " " + lastname + ", " + stufe.getStufe() + " (" + username + "," + password + ")";
+        String header = vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwort + ")";
         for (Kurs kurs : kurse) {
-            header += kurs.getKursbezeichnung() + "\n";
+            header += kurs.getBezeichnung() + "\n";
         }
         return header;
     }
 
     @Override
     public String toString() {
-        return firstname + " " + lastname + ", " + stufe.getStufe();
+        return vorname + " " + nachname + ", " + stufe.getStufe();
     }
 }

@@ -5,34 +5,29 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "faecher")
 public class Fach {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "`Fach-ID`")
     private Integer id;
 
-    @Column(name = "Fach", length = 255)
     private String fach;
-
-    @Column(name = "Kuerzel")
-    private String shorthand;
+    private String kuerzel;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "`fach-lehrer`",
-            joinColumns = @JoinColumn(name = "`Lehrer-ID`"),
-            inverseJoinColumns = @JoinColumn(name = "`Fach-ID`")
+            name = "fach_lehrer",
+            joinColumns = @JoinColumn(name = "lehrerId"),
+            inverseJoinColumns = @JoinColumn(name = "fachId")
     )
     private Set<Lehrer> lehrer;
 
     public Fach() {
     }
 
-    public Fach(String fach, String shorthand) {
+    public Fach(String fach, String kuerzel) {
         this.fach = fach;
-        this.shorthand = shorthand;
+        this.kuerzel = kuerzel;
     }
 
     public Integer getId() {
@@ -51,12 +46,12 @@ public class Fach {
         this.fach = fach;
     }
 
-    public String getShorthand() {
-        return shorthand;
+    public String getKuerzel() {
+        return kuerzel;
     }
 
-    public void setShorthand(String shorthand) {
-        this.shorthand = shorthand;
+    public void setKuerzel(String shorthand) {
+        this.kuerzel = shorthand;
     }
 
     public Set<Lehrer> getLehrer() {
