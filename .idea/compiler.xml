@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Stundenplan_Client" />
         <module name="Stundenplan_Server" />
+        <module name="Stundenplan_Client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Stundenplan_Client" target="1.5" />
+      <module name="Stundenplan_Client" target="12.0.2" />
       <module name="Stundenplan_Server" target="11" />
     </bytecodeTargetLevel>
   </component>
