@@ -14,7 +14,7 @@ import org.jgrosshardt.jpa.database.Fach;
 import org.jgrosshardt.jpa.database.Schueler;
 
 @Path("/schueler")
-public interface StundenplanApi {
+public interface StundenplanAPI {
 
     @GET
     @Path("/")

@@ -20,7 +20,7 @@ import org.jgrosshardt.jpa.database.Schueler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-public class StundenplanClient implements StundenplanApi {
+public class StundenplanClient implements StundenplanAPI {
 
     private class JWTFilter implements ClientRequestFilter, ClientResponseFilter {
         @Override
@@ -67,7 +67,7 @@ public class StundenplanClient implements StundenplanApi {
 
     private final ResteasyClient client;
 
-    private final StundenplanApi proxy;
+    private final StundenplanAPI proxy;
 
     private final ResteasyWebTarget target;
 
@@ -76,7 +76,7 @@ public class StundenplanClient implements StundenplanApi {
     public StundenplanClient(String username, char[] passwd) {
         client = (ResteasyClient) ClientBuilder.newBuilder().register(new JWTFilter()).build();
         target = client.target("http://localhost:8080/Stundenplan_Server/stundenplan");
-        proxy = target.proxy(StundenplanApi.class);
+        proxy = target.proxy(StundenplanAPI.class);
         token = proxy.authenticateUser(username, new String(passwd));
     }
 

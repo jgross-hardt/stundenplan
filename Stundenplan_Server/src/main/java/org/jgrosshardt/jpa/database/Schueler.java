@@ -138,11 +138,11 @@ public class Schueler {
     }
 
     public String toFullString() {
-        StringBuilder header = new StringBuilder(vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwortHash + ")");
+        String header = vorname + " " + nachname + ", " + stufe.getStufe() + " (" + benutzername + "," + passwortHash + ")\n";
         for (Kurs kurs : kurse) {
-            header.append(kurs.getBezeichnung()).append("\n");
+            header += "----------------------\n" + kurs + "\n";
         }
-        return header.toString();
+        return header;
     }
 
     @Override
