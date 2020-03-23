@@ -7,5 +7,11 @@
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://pippin2:3316/stundenplandb</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="stundenplandb@localhost" uuid="561d88cb-f208-4678-b188-7e001397f266">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3306/stundenplandb</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -18,7 +18,7 @@ public class DatabaseTest {
 
     @BeforeClass
     public static void setup() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan-test");
         entityManager = factory.createEntityManager();
         Map<String, Object> properties = factory.getProperties();
         for (String s: properties.keySet()) {

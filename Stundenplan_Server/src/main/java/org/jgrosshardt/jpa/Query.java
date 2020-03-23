@@ -17,7 +17,7 @@ public class Query {
     private static EntityManager entityManager;
 
     public static void setup() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("stundenplan-test");
         entityManager = factory.createEntityManager();
     }
 
