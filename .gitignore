@@ -1,2 +1,4 @@
+/Stundenplan_Client/out/
 /Stundenplan_Server/target/*
 /Stundenplan_Server/src/main/resources/private.key
+*.iml

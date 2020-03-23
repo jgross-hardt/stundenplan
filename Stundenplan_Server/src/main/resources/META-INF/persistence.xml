@@ -34,7 +34,7 @@
 		</properties>
 	</persistence-unit>
 
-	<persistence-unit name="stundenplan-test" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="stundenplan-test">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>org.jgrosshardt.jpa.database.Fach</class>
 		<class>org.jgrosshardt.jpa.database.Kurs</class>
@@ -42,6 +42,7 @@
 		<class>org.jgrosshardt.jpa.database.Schueler</class>
 		<class>org.jgrosshardt.jpa.database.Stufe</class>
 		<class>org.jgrosshardt.jpa.database.Stunde</class>
+		<class>org.jgrosshardt.jpa.database.Unbestaetigt</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />

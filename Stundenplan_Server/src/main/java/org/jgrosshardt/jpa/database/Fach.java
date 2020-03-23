@@ -1,5 +1,7 @@
 package org.jgrosshardt.jpa.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -15,12 +17,14 @@ public class Fach {
     private String fach;
     private String kuerzel;
 
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "fach_lehrer",
             joinColumns = @JoinColumn(name = "lehrerId"),
             inverseJoinColumns = @JoinColumn(name = "fachId")
     )
+    @JsonIgnore
     private Set<Lehrer> lehrer;
 
     public Fach() {
