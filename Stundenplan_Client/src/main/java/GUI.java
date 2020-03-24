@@ -49,18 +49,16 @@ public class GUI extends JFrame implements ActionListener{
         buildTimeTable();
     }
 
-    public String register() {
-        int n = JOptionPane.showConfirmDialog(null, "Hast du bereits einen Account?", "Anmeldung", JOptionPane.YES_NO_OPTION);
-        if(n == JOptionPane.NO_OPTION) {
-            final String nUsername = JOptionPane.showInputDialog(null, "Gib einen Usernamen ein:", null);
-            final String nPassword = JOptionPane.showInputDialog(null, "Gib ein Passwort ein:", null);
-            return nUsername + ":" + nPassword;
-        }
-        else {
-            final String oUsername = JOptionPane.showInputDialog(null, "Username:", null);
-            final String oPassword = JOptionPane.showInputDialog(null, "Passwort:", null);
-            return oUsername + ":" + oPassword;
-        }
+    public Credentials register() {
+            final String username = JOptionPane.showInputDialog(null, "Gib einen Usernamen ein:", null);
+            final String password = JOptionPane.showInputDialog(null, "Gib ein Passwort ein:", null);
+            return new Credentials(username, password.toCharArray());
+    }
+
+    public Credentials login() {
+        final String username = JOptionPane.showInputDialog(null, "Username:", null);
+        final String password = JOptionPane.showInputDialog(null, "Passwort:", null);
+        return new Credentials(username, password.toCharArray());
     }
 
     public void buildTimeTable() {
