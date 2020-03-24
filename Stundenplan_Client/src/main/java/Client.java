@@ -10,13 +10,23 @@ public class Client {
     public Client() {
         gui = new GUI();
         int n = JOptionPane.showConfirmDialog(null, "Hast du bereits einen Account?", "Anmeldung", JOptionPane.YES_NO_OPTION);
+        boolean isLoggedIn = false;
         if((n == JOptionPane.NO_OPTION)) {
             Credentials logData = gui.register();
-            client = new StundenplanClient(logData.getUsername(), logData.getPassword());
+            if(logData != null) {
+                client = new StundenplanClient(logData.getUsername(), logData.getPassword());
+                isLoggedIn = true;
+            }
         }
         else {
             Credentials logData = gui.login();
-            client = new StundenplanClient(logData.getUsername(), logData.getPassword());
+            if(logData != null) {
+                client = new StundenplanClient(logData.getUsername(), logData.getPassword());
+                isLoggedIn = true;
+            }
+        }
+        if(isLoggedIn) {
+            gui.buildTimeTable();
         }
     }
 
